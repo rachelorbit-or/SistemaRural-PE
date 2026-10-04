@@ -1,0 +1,7 @@
+# Archivos que nunca se suben al repositorio
+clave.key
+datos/
+*.json
+__pycache__/
+.pytest_cache/
+*.tmp
