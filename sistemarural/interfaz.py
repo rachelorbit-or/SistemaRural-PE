@@ -41,7 +41,7 @@ class Aplicacion(tk.Tk):
         self.__usuario = None
         self.__usuarios = {}
         self.__v = {}                 # variables de los campos de texto
-        self.__personal_servicio = {}  # texto del combo -> DNI del personal
+        self.__personal_por_lista = {}  # lista (c_personal o h_personal) -> {texto: DNI}
         self.__citas_listadas = {}     # fila de la tabla -> cita
 
         self.__construir_barra_usuario()
@@ -96,16 +96,17 @@ class Aplicacion(tk.Tk):
         cuadro.insert("end", contenido)
         cuadro.configure(state="disabled")
 
-    def __cargar_personal(self, combo, nombre_servicio):
-        """Llena un combo con el personal del servicio elegido."""
+    def __cargar_personal(self, combo, nombre_servicio, variable):
+        """Llena la lista de personal con el servicio elegido y borra la elección anterior."""
         personal = self.__sistema.obtener_servicio(nombre_servicio).listar_personal()
-        self.__personal_servicio = {f"{p.nombres} — {p.cargo}": p.dni for p in personal}
-        combo["values"] = list(self.__personal_servicio)
+        self.__personal_por_lista[variable] = {f"{p.nombres} — {p.cargo}": p.dni for p in personal}
+        combo["values"] = list(self.__personal_por_lista[variable])
+        self.__v[variable].set("")
 
     def __dni_de_personal(self, nombre_variable):
-        dni = self.__personal_servicio.get(self.__v[nombre_variable].get())
+        dni = self.__personal_por_lista.get(nombre_variable, {}).get(self.__v[nombre_variable].get())
         if dni is None:
-            raise ErrorDeValidacion("Elija el personal de la lista.")
+            raise ErrorDeValidacion("Elija el personal de la lista (primero elija el servicio).")
         return dni
 
     # ---------- Usuario actual ----------
@@ -254,7 +255,7 @@ class Aplicacion(tk.Tk):
 
     @manejar_errores
     def __al_elegir_servicio_cita(self, _evento=None):
-        self.__cargar_personal(self.__combo_personal_cita, self.__v["c_servicio"].get())
+        self.__cargar_personal(self.__combo_personal_cita, self.__v["c_servicio"].get(), "c_personal")
         self.__listar_citas()
 
     @manejar_errores
@@ -340,7 +341,7 @@ class Aplicacion(tk.Tk):
 
     @manejar_errores
     def __al_elegir_servicio_horario(self, _evento=None):
-        self.__cargar_personal(self.__combo_personal_horario, self.__v["h_servicio"].get())
+        self.__cargar_personal(self.__combo_personal_horario, self.__v["h_servicio"].get(), "h_personal")
         self.__mostrar_horarios()
 
     @manejar_errores
