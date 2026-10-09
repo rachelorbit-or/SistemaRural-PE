@@ -381,7 +381,7 @@ class Aplicacion(tk.Tk):
 
     def __mostrar_horarios(self):
         servicio = self.__sistema.obtener_servicio(self.__v["h_servicio"].get())
-        lineas = [f"{h.dia.capitalize()} · {h.turno}: "
+        lineas = [f"{servicio.nombre} · {h.dia.capitalize()} · {h.turno}: "
                   + ", ".join(p.nombres for p in h.listar_personal())
                   for h in servicio.listar_horarios()]
         self.__mostrar(self.__texto_horarios,
