@@ -363,7 +363,9 @@ class Aplicacion(tk.Tk):
         self.__lista(marco, "Turno", "h_turno", list(TURNOS), 2, 14)
         self.__combo_personal_horario = self.__lista(marco, "Personal", "h_personal", [], 3, 40)
         ttk.Button(marco, text="Asignar al horario",
-                   command=self.__asignar_horario).grid(row=4, column=0, columnspan=2, pady=6)
+                   command=self.__asignar_horario).grid(row=4, column=0, pady=6)
+        ttk.Button(marco, text="Quitar del horario",
+                   command=self.__quitar_horario).grid(row=4, column=1, pady=6)
         self.__texto_horarios = tk.Text(marco, height=14, width=100, state="disabled")
         self.__texto_horarios.grid(row=5, column=0, columnspan=3, pady=8)
 
@@ -386,6 +388,13 @@ class Aplicacion(tk.Tk):
                   for h in servicio.listar_horarios()]
         self.__mostrar(self.__texto_horarios,
                        "\n".join(lineas) or "Este servicio aún no tiene horarios asignados.")
+       
+    @manejar_errores
+    def __quitar_horario(self, _evento=None):
+        v = self.__v
+        self.__sistema.quitar_de_horario(self.__usuario, v["h_servicio"].get(), v["h_dia"].get(),
+                                         v["h_turno"].get(), self.__dni_de_personal("h_personal"))
+        self.__mostrar_horarios()
 
     # ---------- Pestaña Reporte ----------
     def __construir_reporte(self, marco):

@@ -32,3 +32,10 @@ class Horario:
 
     def listar_personal(self) -> tuple:
         return tuple(self.__personal)
+
+    def quitar(self, dni: str) -> None:
+        for p in self.__personal:
+            if p.dni == dni:
+                self.__personal.remove(p)
+                return
+        raise ErrorDeValidacion("Esa persona no está asignada a ese día y turno.")

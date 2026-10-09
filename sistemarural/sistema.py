@@ -161,6 +161,11 @@ class SistemaChontapaccha:
             dia, turno, self.obtener_personal(dni_personal))
         self.guardar()
         return horario
+    def quitar_de_horario(self, usuario, nombre_servicio: str, dia: str, turno: str,
+                          dni_personal: str) -> None:
+        self._exigir(usuario, "programar_cita", "modificar horarios")
+        self.obtener_servicio(nombre_servicio).quitar_de_horario(dia, turno, dni_personal)
+        self.guardar()
 
     def dispensar_receta(self, usuario, dni: str, items: list) -> Receta:
         if usuario is None or not hasattr(usuario, "puede_ver_diagnostico"):

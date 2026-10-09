@@ -95,6 +95,14 @@ class Servicio:
         horario.asignar(personal)
         return horario
 
+    def quitar_de_horario(self, dia: str, turno: str, dni: str) -> None:
+        horario = self.__horarios.get((dia, turno))
+        if horario is None:
+            raise ErrorDeValidacion("Ese día y turno no tiene horario asignado.")
+        horario.quitar(dni)
+        if not horario.listar_personal():
+            del self.__horarios[(dia, turno)]
+
     def listar_horarios(self) -> tuple:
         return tuple(self.__horarios.values())
 
