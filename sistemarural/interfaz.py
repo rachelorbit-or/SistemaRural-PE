@@ -62,10 +62,10 @@ class Aplicacion(tk.Tk):
     # ---------- Colores y tipografía ----------
     def __aplicar_estilo(self):
         """Define los colores de la ventana. Para cambiar la paleta, edite estas variables."""
-        fondo = "#2079c7"        # fondo general (azul muy claro)
-        principal = "#2e7d6b"    # color de botones, pestaña activa y encabezados
-        oscuro = "#256355"       # color de los botones al pasar el mouse
-        pestaña = "#cfe5df"      # pestañas que no están elegidas
+        fondo = "#f4fbff"        # fondo general (azul muy claro)
+        principal = "#8ecae6"    # color de botones, pestaña activa y encabezados
+        oscuro = "#6bb5d8"       # color de los botones al pasar el mouse
+        pestana = "#dff1fb"      # pestañas que no están elegidas
         letra = ("Segoe UI", 10)
 
         estilo = ttk.Style(self)
@@ -77,14 +77,14 @@ class Aplicacion(tk.Tk):
         estilo.configure("TNotebook", background=fondo)
         estilo.configure("TNotebook.Tab", background=pestana, padding=(14, 6))
         estilo.map("TNotebook.Tab", background=[("selected", principal)],
-                   foreground=[("selected", "white")])
-        estilo.configure("TButton", background=principal, foreground="white", padding=6)
+                   foreground=[("selected", "#1d3557")])
+        estilo.configure("TButton", background=principal, foreground="#1d3557", padding=6)
         estilo.map("TButton", background=[("active", oscuro)])
-        estilo.configure("Treeview.Heading", background=principal, foreground="white",
+        estilo.configure("Treeview.Heading", background=principal, foreground="#1d3557",
                          font=("Segoe UI", 10, "bold"))
-        estilo.configure("Treeview", background="#58beec", fieldbackground="#58beec")
-        estilo.configure("TEntry", fieldbackground="#d3ebfa")
-        estilo.configure("TCombobox", fieldbackground="#d3ebfa")
+        estilo.configure("Treeview", background="#ffffff", fieldbackground="#ffffff")
+        estilo.configure("TEntry", fieldbackground="#ffffff")
+        estilo.configure("TCombobox", fieldbackground="#ffffff")
 
     # ---------- Ayudas para armar la ventana ----------
     @staticmethod
