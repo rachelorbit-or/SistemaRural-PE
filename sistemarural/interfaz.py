@@ -37,6 +37,7 @@ class Aplicacion(tk.Tk):
         super().__init__()
         self.title("SistemaRural-PE · Puesto de Salud Chontapaccha")
         self.geometry("980x680")
+        self.__aplicar_estilo("#3aadde")
         self.__sistema = sistema
         self.__usuario = None
         self.__usuarios = {}
@@ -57,6 +58,33 @@ class Aplicacion(tk.Tk):
         self.__refrescar_usuarios()
         self.__buscar_pacientes()
         self.__refrescar_inventario()
+
+    # ---------- Colores y tipografía ----------
+    def __aplicar_estilo(self):
+        """Define los colores de la ventana. Para cambiar la paleta, edite estas variables."""
+        fondo = "#2079c7"        # fondo general (azul muy claro)
+        principal = "#2e7d6b"    # color de botones, pestaña activa y encabezados
+        oscuro = "#256355"       # color de los botones al pasar el mouse
+        pestaña = "#cfe5df"      # pestañas que no están elegidas
+        letra = ("Segoe UI", 10)
+
+        estilo = ttk.Style(self)
+        estilo.theme_use("clam")  # tema que permite cambiar los colores
+        self.configure(background=fondo)
+        estilo.configure(".", background=fondo, font=letra)
+        estilo.configure("TFrame", background=fondo)
+        estilo.configure("TLabel", background=fondo)
+        estilo.configure("TNotebook", background=fondo)
+        estilo.configure("TNotebook.Tab", background=pestana, padding=(14, 6))
+        estilo.map("TNotebook.Tab", background=[("selected", principal)],
+                   foreground=[("selected", "white")])
+        estilo.configure("TButton", background=principal, foreground="white", padding=6)
+        estilo.map("TButton", background=[("active", oscuro)])
+        estilo.configure("Treeview.Heading", background=principal, foreground="white",
+                         font=("Segoe UI", 10, "bold"))
+        estilo.configure("Treeview", background="#58beec", fieldbackground="#58beec")
+        estilo.configure("TEntry", fieldbackground="#d3ebfa")
+        estilo.configure("TCombobox", fieldbackground="#d3ebfa")
 
     # ---------- Ayudas para armar la ventana ----------
     @staticmethod
