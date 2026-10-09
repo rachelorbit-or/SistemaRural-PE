@@ -12,7 +12,7 @@ from sistemarural.reportes import GeneradorReporte
 from sistemarural.validadores import validar_dni
 
 SERVICIOS_BASE = ("Medicina", "Odontología", "Psicología", "Control del niño", "Obstetricia")
-
+DNI_PERSONAL_DEMO = ("10000001", "10000002", "10000003") # usuarios ficticios de prueba 
 
 class SistemaChontapaccha:
     """Punto único de acceso para la interfaz: valida roles, guarda y carga los datos."""
@@ -267,4 +267,9 @@ class SistemaChontapaccha:
                                           ("M02", "Amoxicilina 500 mg", 8),
                                           ("M03", "Ibuprofeno 400 mg", 30)]:
                 self.__inventario.agregar_medicamento(Medicamento(codigo, nombre, stock))
+        demo =[p for p in self.__personal.values () if p.dni in DNI_PERSONAL_DEMO]
+        for servicio in self .__servicios.values():
+            if not servicio.listar_personal():
+                for persona in demo:
+                    servicio.agregar_personal(persona)
         self.guardar()

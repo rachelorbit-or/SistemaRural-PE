@@ -1,4 +1,4 @@
-# Archivos que nunca se suben al repositorio
+git pull# Archivos que nunca se suben al repositorio
 clave.key
 datos/
 *.json
